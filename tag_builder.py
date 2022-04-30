@@ -5,20 +5,23 @@ class TagBuilder():
 	"""
 	HTML Builder Class for generating HTML.
 	"""
-	def __init__(self, tag_name : str, data : str = "", *, parent : TagBuilder = None, collapse = False) -> None:
+	def __init__(self, tag_name : str, data : str = "", *, parent : TagBuilder = None, collapse = False, style = "") -> None:
 		self.parent = parent
 		self.collapse = collapse
 		self.data = data
 		self.tag_name = tag_name
 		self.children : List[TagBuilder] = []
-		self.properties = {}
+		self.properties = {
+			"class": style
+		}
 
 	def decorate(self, property_name : str, property_value : str):
 		"""
 		Adds a property to this tag.
 		"""
 		base = self.properties.get(property_name, "")
-		self.properties[property_name] = f"{base}  {property_value}"
+
+		self.properties[property_name] = f"{base} {property_value}"
 		return self
 
 
@@ -52,11 +55,11 @@ class TagBuilder():
 		return tag
 
 
-	def insert_tag(self, tag_name: str, data : str = "", *, collapse = False) -> TagBuilder:
+	def insert_tag(self, tag_name: str, data : str = "", *, collapse = False,  style = "") -> TagBuilder:
 		"""
 		Inserts a new tag into this structure, returning the child tag.
 		"""
-		child = TagBuilder(tag_name, data, parent=self, collapse=collapse)
+		child = TagBuilder(tag_name, data, parent=self, collapse=collapse, style=style)
 		self.children.append(child)
 		return child
 
@@ -67,11 +70,11 @@ class TagBuilder():
 		return self.insert_tag("img", f"", collapse=True).decorate("src", src).decorate("alt", alt)
 
 		
-	def append_tag(self, tag_name: str, data : str = "", *, collapse = False) -> TagBuilder:
+	def append_tag(self, tag_name: str, data : str = "", *, collapse = False, style = "") -> TagBuilder:
 		"""
 		Appends a new tag to this structure, returning the parent tag.
 		"""
-		child = TagBuilder(tag_name, data, parent=self, collapse=collapse)
+		child = TagBuilder(tag_name, data, parent=self, collapse=collapse, style=style)
 		self.children.append(child)
 		return self
 

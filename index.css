@@ -1,48 +1,147 @@
-
 html {
-	background-color: darkgray;
-	font-family: Arial, Helvetica, sans-serif;
+  /* very dark gray */
+  background-color: #999; 
 }
 
-.property_container {
-	background-color: lightblue;
-	border: 1px solid black;
-	border-radius: 5px;
-	margin: 5px;
-	padding: 10px;
+.component {
+  background-color: #222;
+  border: 1px solid #999;
+  border-radius: 8px;
+  padding: 0.2em 0.4em;
+  margin-bottom: 0.5em;
+}
+
+/* .button-group {
+  background-color: #111;
+  border: 1px solid #999;
+  border-radius: 3px;
+  font-family: monospace;
+  padding: 0.1em;
+} */
+
+.button {
+  background-color: #111;
+  border: 1px solid #999;
+}
+
+.button.left {
+  border-radius: 6px 0 0 6px;
+}
+
+.button.right {
+  border-radius: 0 6px 6px 0;
+}
+
+.button.active {
+  background-color: #4d2659;
+}
+
+
+
+
+.indent {
+  padding-left: 3em;
+}
+
+/**
+* prism.js tomorrow night eighties for JavaScript, CoffeeScript, CSS and HTML.
+* Based on https://github.com/chriskempson/tomorrow-theme
+*
+* @author Rose Pritchard
+*/
+
+.token.comment,
+.token.block-comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+padding-top: 1em;
+  font-size: 0.8em;
+  font-style: italic;
+  color: #999;
+}
+
+.token.punctuation {
+  color: #ccc;
+}
+
+.token.property,
+.token.class-name,
+.token.constant,
+.token.symbol {
+  color: #f8c555;
+}
+
+.token.selector,
+.token.important,
+.token.atrule,
+.token.keyword,
+.token.builtin,
+.token.boolean,
+.token.float,
+.token.number,
+.token.integer {
+  color: #cc99cd;
+}
+
+.token.boolean {
+  color: #387bc7
+}
+
+.token.unknown,
+.token.array,
+.token.object {
+  color: #e05b43
+}
+
+.token.string,
+.token.char,
+.token.attr-value,
+.token.regex,
+.token.variable {
+  color: #7ec699;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #67cdcc;
+}
+
+.token.none {
+  color: white;
 }
 
 /* Table */
 
 table {
-	border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 table {
-	margin-top: 4px;
-	display: block;
-	width: auto !important;
-	max-width: 100%;
-	overflow-x: auto;
+  margin-top: 4px;
+  display: block;
+  width: auto !important;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 th,
 td {
-	border-style: solid;
-	border-width: 1px;
-	padding: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 6px;
 }
 
-/* Tables */
 tbody,
 th,
 td {
-	border-color: #656e73;
+  border-color: #656e73;
 }
 
 th {
-	background-color: #a5f1b2;
+  background-color: #a5f1b2;
 }
 td {
-	background-color: #ddfbdd;
+  background-color: #ddfbdd;
 }

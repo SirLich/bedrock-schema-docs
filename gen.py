@@ -76,7 +76,6 @@ def generate_html(data):
 				.parent
 				.insert_tag("link", collapse=True)
 					.decorate("rel", "stylesheet")
-					.decorate("href", "https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css")
 				.parent
 			.parent
 			.insert_tag("body")

@@ -1,4 +1,56 @@
 {
+    "minecraft:health": {
+        "description": "UNDOCUMENTED",
+        "$comment": "UNDOCUMENTED",
+        "type": "object",
+        "title": "Health",
+        "additionalProperties": false,
+        "required": [],
+        "dependencies": {
+            "max": [
+                "value"
+            ]
+        },
+        "properties": {
+            "max": {
+                "type": "integer",
+                "description": "The maximum health the entity can heal",
+                "title": "Maximum"
+            },
+            "value": {
+                "description": "Current health of the entity",
+                "title": "Value",
+                "oneOf": [
+                    {
+                        "type": "integer",
+                        "default": 1
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                            "range_min",
+                            "range_max"
+                        ],
+                        "properties": {
+                            "range_min": {
+                                "title": "Range Minimum",
+                                "description": "UNDOCUMENTED",
+                                "$comment": "UNDOCUMENTED",
+                                "type": "number"
+                            },
+                            "range_max": {
+                                "title": "Range Maximum",
+                                "description": "UNDOCUMENTED",
+                                "$comment": "UNDOCUMENTED",
+                                "type": "number"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
     "minecraft:addrider": {
         "additionalProperties": false,
         "type": "object",
@@ -67,8 +119,16 @@
                         }
                     },
                     {
+                        "description": "A minecraft item identifier",
+                        "pattern": "^[0-9a-zA-Z:_\\-\\.]+$",
+                        "title": "Item Identifier",
                         "type": "string",
-                        "$ref": "#/definitions/H"
+                        "defaultSnippets": [
+                            {
+                                "label": "New Identifier",
+                                "body": "$1:$2"
+                            }
+                        ]
                     }
                 ]
             },
