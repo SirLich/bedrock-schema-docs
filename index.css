@@ -1,0 +1,48 @@
+
+html {
+	background-color: darkgray;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.property_container {
+	background-color: lightblue;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 10px;
+}
+
+/* Table */
+
+table {
+	border-collapse: collapse;
+}
+
+table {
+	margin-top: 4px;
+	display: block;
+	width: auto !important;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+th,
+td {
+	border-style: solid;
+	border-width: 1px;
+	padding: 6px;
+}
+
+/* Tables */
+tbody,
+th,
+td {
+	border-color: #656e73;
+}
+
+th {
+	background-color: #a5f1b2;
+}
+td {
+	background-color: #ddfbdd;
+}

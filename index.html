@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Component Test</title>
+    <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css"
+    />
+  </head>
+  <body>
+    <div class="components">
+      <details class="property_container">
+        <summary class="property_name">minecraft:addrider</summary>
+        <p class="property_description object_description">
+          Adds a rider to the entity. Requires `minecraft:rideable.`
+        </p>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>entity_type</td>
+            <td>string</td>
+            <td>
+              The entity type that will be riding this entity
+              <p class="property_description string_description">
+                The entity type that will be riding this entity<img
+                  src="icons/book-2.svg"
+                  alt=""
+                />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>spawn_event</td>
+            <td>string</td>
+            <td>
+              The spawn event that will be used when the riding entity is
+              created
+              <p class="property_description string_description">
+                The spawn event that will be used when the riding entity is
+                created<img src="icons/book-2.svg" alt="" />
+              </p>
+            </td>
+          </tr>
+        </table>
+      </details>
+      <details class="property_container">
+        <summary class="property_name">minecraft:breedable</summary>
+        <p class="property_description object_description">
+          Defines the way an entity can get into the `love` state.
+        </p>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>allow_sitting</td>
+            <td>boolean</td>
+            <td>
+              If true, entities can breed while sitting.
+              <p class="property_description string_description">
+                If true, entities can breed while sitting.<img
+                  src="icons/seeding.svg"
+                  alt=""
+                />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>blend_attributes</td>
+            <td>boolean</td>
+            <td>
+              If true, the entities will blend their attributes in the offspring
+              after they breed. For example, horses blend their health,
+              movement, and jump_strength in their offspring.
+              <p class="property_description string_description">
+                If true, the entities will blend their attributes in the
+                offspring after they breed. For example, horses blend their
+                health, movement, and jump_strength in their offspring.<img
+                  src="icons/seeding.svg"
+                  alt=""
+                />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>breed_cooldown</td>
+            <td>number</td>
+            <td>Time in seconds before the Entity can breed again.</td>
+          </tr>
+          <tr>
+            <td>breed_items</td>
+            <td>Unknown Type</td>
+            <td>
+              The list of items that can be used to get the entity into the
+              `love` state
+            </td>
+          </tr>
+          <tr>
+            <td>breeds_with</td>
+            <td>Unknown Type</td>
+            <td>
+              The list of entity definitions that this entity can breed with.
+            </td>
+          </tr>
+          <tr>
+            <td>deny_parents_variant</td>
+            <td>object</td>
+            <td>
+              Determines how likely the baby of parents with the same variant
+              will deny that variant and take a random variant within the given
+              range instead.
+              <details class="property_container">
+                <summary class="property_name">deny_parents_variant</summary>
+                <p class="property_description object_description">
+                  Determines how likely the baby of parents with the same
+                  variant will deny that variant and take a random variant
+                  within the given range instead.
+                </p>
+                <table>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                  <tr>
+                    <td>chance</td>
+                    <td>number</td>
+                    <td>
+                      The percentage chance of denying the parents` variant.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>max_variant</td>
+                    <td>integer</td>
+                    <td>The inclusive maximum of the variant range.</td>
+                  </tr>
+                  <tr>
+                    <td>min_variant</td>
+                    <td>integer</td>
+                    <td>The inclusive minimum of the variant range.</td>
+                  </tr>
+                </table>
+              </details>
+            </td>
+          </tr>
+          <tr>
+            <td>environment_requirements</td>
+            <td>Unknown Type</td>
+            <td>
+              The list of nearby block requirements to get the entity into the
+              `love` state.
+            </td>
+          </tr>
+          <tr>
+            <td>extra_baby_chance</td>
+            <td>number</td>
+            <td>
+              Chance that up to 16 babies will spawn between 0.0 and 1.0, where
+              1.0 is 100%.
+            </td>
+          </tr>
+          <tr>
+            <td>love_filters</td>
+            <td>Unknown Type</td>
+            <td>The filters to run when attempting to fall in love.</td>
+          </tr>
+          <tr>
+            <td>mutation_factor</td>
+            <td>object</td>
+            <td>
+              Determines how likely the babies are to NOT inherit one of their
+              parent's variances. Values are between 0.0 and 1.0, with a higher
+              number meaning more likely to mutate.
+              <details class="property_container">
+                <summary class="property_name">mutation_factor</summary>
+                <p class="property_description object_description">
+                  Determines how likely the babies are to NOT inherit one of
+                  their parent's variances. Values are between 0.0 and 1.0, with
+                  a higher number meaning more likely to mutate.
+                </p>
+                <table>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                  </tr>
+                  <tr>
+                    <td>color</td>
+                    <td>number</td>
+                    <td>
+                      The percentage chance of a mutation on the entity's color.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>extra_variant</td>
+                    <td>number</td>
+                    <td>
+                      The percentage chance of a mutation on the entity's extra
+                      variant type.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>variant</td>
+                    <td>number</td>
+                    <td>
+                      The percentage chance of a mutation on the entity's
+                      variant type.
+                    </td>
+                  </tr>
+                </table>
+              </details>
+            </td>
+          </tr>
+          <tr>
+            <td>causes_pregnancy</td>
+            <td>boolean</td>
+            <td>
+              If true, the entity will become pregnant instead of spawning a
+              baby.
+              <p class="property_description string_description">
+                If true, the entity will become pregnant instead of spawning a
+                baby.<img src="icons/seeding.svg" alt="" />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>inherit_tamed</td>
+            <td>boolean</td>
+            <td>
+              If true, the babies will be automatically tamed if its parents are
+              <p class="property_description string_description">
+                If true, the babies will be automatically tamed if its parents
+                are<img src="icons/seeding.svg" alt="" />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>require_full_health</td>
+            <td>boolean</td>
+            <td>
+              If true, the entity needs to be at full health before it can
+              breed.
+              <p class="property_description string_description">
+                If true, the entity needs to be at full health before it can
+                breed.<img src="icons/seeding.svg" alt="" />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>require_tame</td>
+            <td>boolean</td>
+            <td>
+              If true, the entities need to be tamed first before they can
+              breed.
+              <p class="property_description string_description">
+                If true, the entities need to be tamed first before they can
+                breed.<img src="icons/seeding.svg" alt="" />
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>transform_to_item</td>
+            <td>string</td>
+            <td>
+              The feed item used will transform to this item upon successful
+              interaction. Format: itemName:auxValue
+              <p class="property_description string_description">
+                The feed item used will transform to this item upon successful
+                interaction. Format: itemName:auxValue<img
+                  src="icons/book-2.svg"
+                  alt=""
+                />
+              </p>
+            </td>
+          </tr>
+        </table>
+      </details>
+    </div>
+  </body>
+</html>
