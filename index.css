@@ -11,6 +11,21 @@ html {
   margin-bottom: 0.5em;
 }
 
+.italic 
+{
+  font-style: italic;
+}
+
+.hidden 
+{
+  display: none;
+}
+
+.invisible 
+{
+  opacity: 0
+}
+
 /* .button-group {
   background-color: #111;
   border: 1px solid #999;
@@ -36,7 +51,15 @@ html {
   background-color: #4d2659;
 }
 
-
+button, .no-style {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 
 
 .indent {
@@ -72,6 +95,10 @@ padding-top: 1em;
   color: #f8c555;
 }
 
+.token.type
+{
+  color: white;
+}
 .token.selector,
 .token.important,
 .token.atrule,
@@ -145,3 +172,5 @@ th {
 td {
   background-color: #ddfbdd;
 }
+
+
