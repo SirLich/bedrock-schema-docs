@@ -134,36 +134,21 @@ def generate_html(data, definitions):
 	Expects a dictionary containing component names and schema data
 	"""
 
-	components = tb.TagBuilder("div").decorate("class", "components")
+	components = tb.TagBuilder("div").decorate("class", "site-content")
 
 	for component_name, schema in data.get('properties').items():
-		component = components.insert_tag("div", style="component")
+		component = components.insert_tag("div", style=f"component {component_name}")
 		code = component.insert_tag("code", style="code")
 		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name)
 
-	tag = (
-		tb.TagBuilder("html")
-			.insert_tag("head")
-				.append_tag("title", "Component Test")
-				.insert_tag("link", collapse=True)
-					.decorate("rel", "stylesheet")
-					.decorate("href", "index.css")
-				.insert_tag("link", collapse=True)
-					.decorate("rel", "stylesheet")
-				.parent
-			.parent
-			.insert_tag("body")
-				.insert(components)
-				.insert_tag("script")
-						.decorate("src", "index.js")
-					.parent
-		.generate()
-	)
+	with open('base.html', 'r') as f:
+		html = f.read()
 
-	return tag
+	html = html.replace('<gen/>', components.generate())
+
+	return html
 
 def main():
-	# OLD WAY
 	with open('schema.json') as f:
 		schema = json.load(f)
 
@@ -172,20 +157,7 @@ def main():
 	data = smart_get(data, 'components', definitions)
 	html = generate_html(data, definitions)
 
-
-	# # NEW WAY
-	# with open('resource_entity.json') as f:
-	# 	schema = json.load(f)
-
-	# definitions = schema.get('definitions')
-
-	# data = schema.get('definitions').get('E')
-	# html = generate_html(data, definitions)
-
-
-#	## SAVE
 	with open('index.html', 'w') as f:
-		f.write('<!DOCTYPE html>')
 		f.write(html)
 
 

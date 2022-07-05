@@ -10,3 +10,5 @@ Auto generated documentation from the Schemas by Blockception.
 
 This website is built using a small self-written Python module for generating HTML. To update the website, this generator needs to be re-run.
 
+`python generate.py`
+

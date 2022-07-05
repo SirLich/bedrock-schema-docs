@@ -1,14 +1,84 @@
+/* Mobile First CSS */
+
 html {
-  /* very dark gray */
-  background-color: #999; 
+  background-color:#2d2e2f;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+html, body {
+  margin:0;
+  padding:0;
+}
+
+.searchbar {
+  justify-self: end;
+
+  /* Style the searchbar in stunning dark mode */
+  background-color: #2d2e2f;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid #111;
+  width: 20em;
+  margin-right: 10px;
+}
+
+.searchbar:hover {
+  border: 2px solid #1a92e8;
+}
+
+.nav {
+  display : flex;
+  justify-content: start;
+  align-items : center;
+  background-color: #18191a; 
+  border-bottom: 0.1em solid #a5f1b2;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  height: 3em;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  float: left;
+  border-color: black;
+}
+
+/* Right align buttons in navbar */
+.nav-button-group {
+  margin-right: auto;
+}
+
+.site-content {
+  padding-top: 3em;
+  padding-bottom: 1em;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.nav-item {
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+}
+
+.nav-link {
+  color: #666;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #fff;
 }
 
 .component {
-  background-color: #222;
-  border: 1px solid #999;
+  box-shadow: 0 0 3px #1a92e8;  
+  background-color: #242526;
   border-radius: 8px;
   padding: 0.2em 0.4em;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
+  padding-bottom: 0.8em;
 }
 
 .italic 
@@ -25,14 +95,6 @@ html {
 {
   opacity: 0
 }
-
-/* .button-group {
-  background-color: #111;
-  border: 1px solid #999;
-  border-radius: 3px;
-  font-family: monospace;
-  padding: 0.1em;
-} */
 
 .button {
   background-color: #111;
@@ -63,7 +125,7 @@ button, .no-style {
 
 
 .indent {
-  padding-left: 3em;
+  padding-left: 1em;
 }
 
 /**
@@ -173,4 +235,20 @@ td {
   background-color: #ddfbdd;
 }
 
+/* Desktop */
+@media (min-width: 600px) {
+  .site-content {
+    padding-top: 60px;
+    padding-bottom: 20px;
+    padding-left: 8%;
+    padding-right: 15%;
+  }
 
+  html {
+    font-size: 16px;
+  }
+
+  .indent {
+    padding-left: 2em;
+  }
+}
