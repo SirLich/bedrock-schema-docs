@@ -45,13 +45,21 @@ html, body {
   border-color: black;
 }
 
+#counter {
+  position:relative;
+  left:-3em;
+  width: 0;
+  margin-right: 0em;
+  color:#f8c555;
+}
+
 /* Right align buttons in navbar */
 .nav-button-group {
   margin-right: auto;
 }
 
 .site-content {
-  padding-top: 3em;
+  padding-top: 4em;
   padding-bottom: 1em;
   padding-left: 3%;
   padding-right: 3%;
@@ -113,7 +121,7 @@ html, body {
   background-color: #4d2659;
 }
 
-button, .no-style {
+/* button, .no-style {
 	background: none;
 	color: inherit;
 	border: none;
@@ -121,7 +129,7 @@ button, .no-style {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
-}
+} */
 
 
 .indent {
@@ -205,6 +213,21 @@ padding-top: 1em;
 
 table {
   border-collapse: collapse;
+}
+
+.collapse {
+    /* Style the searchbar in stunning dark mode */
+    background-color: #2d2e2f;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #111;
+    margin-right: 10px;
+}
+
+.collapse:hover {
+  border: 2px solid #1a92e8;
+  background-color: #646673;
 }
 
 table {
