@@ -88,12 +88,19 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			# A preview of the compound types
 			compound_types = fetch_compound_types(schema)
 
-			tag.insert_tag("span", f"One Of: {', '.join(compound_types)}", style="token type italic")
+			first = True
+			for compound_type in compound_types:
+				if not first:
+					tag.append_tag("span", "or", style="token comment")
+				first = False
+				tag.append_tag("span", f"{compound_type}", style=f"token {compound_type}")
+
 
 			# Recurse into each compound type
+			inner_tag = tb.TagBuilder("div", style="compound-block")
 			for option in schema.get("oneOf"):
-				gen_recursive(tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path)
-			
+				gen_recursive(inner_tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path)
+			tag.insert(inner_tag)
 			return tag
 
 		# Simple Types, which are not compound

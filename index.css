@@ -131,6 +131,9 @@ html, body {
 	outline: inherit;
 } */
 
+.compound-block {
+  border-left: 0.1em solid #999;
+}
 
 .indent {
   padding-left: 1em;
