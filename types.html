@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head class="">
+    <title>Component Test</title>
+    <link rel="stylesheet" href="index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="nav">
+      <a class="collapse type-button" href="index.html">Back</a>
+      <!-- An HTML table explaining the different types in json -->
+    </div>
+    <div class="site-content">
+      <div class="component">
+        <span class="token float">float</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          A float in json is a number that has a decimal point. For example: <span class="token float">1.23</span>
+          <br><br>
+          Notice the lack of quotes.
+          <br><br>
+          In Minecraft, some types MUST be typed as a float, even if you are using a whole number. 
+          In this case, include the 0, for example <span class="token float">1.0</span>
+        </span>
+      </div>
+      <div class="component">
+        <span class="token integer">integer</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          An integer in json is a number that has no decimal point. For example: <span class="token integer">1</span>
+          <br><br>
+          Notice the lack of quotes.
+        </span>
+      </div>
+      <div class="component">
+        <span class="token boolean">boolean</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          A boolean in json is a true or false value. For example: <span class="token boolean">true</span>
+          <br><br>
+          Notice the lack of quotes.
+          <br><br>
+          Booleans in Minecraft can often also be represented as 1 or 0 as well, using the integer or float types.
+        </span>
+      </div>
+      <div class="component">
+        <span class="token string">string</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          A string in json is made up of a series of symbols (usually characters) that are grouped together inside of quotes.
+          <br><br>
+          For example <span class="token string">"this is a string"</span>
+          <br><br>
+          When you want to use a <span class="token string">"</span> character inside of a 
+          <span class="token string">string</span>, it must be escaped. This means that you use a 
+          <span class="token symbol">\</span> character directly proceeding the quote. For example: 
+          <span class="token string">"Hello there \"Friend\""</span>
+        </span>
+      </div>
+      <div class="component">
+        <span class="token array">array</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          An array in json is a list of values. For example: 
+          <span class="token array">[</span><span class="token integer">1, 2, 3</span><span class="token array">]</span>
+          <br><br>
+          Notice how the values are separated by commas, and contained within square brackets.
+          <br><br>
+          All the rules that you already learned apply. For example, a list of 
+          strings would be represented as: 
+          <span class="token array">[</span><span class="token string">"string", "string", "string"</span><span class="token array">]</span>
+          <br><br>
+          Because arrays are a compound type, they can be combined infinitely. For example, an array, of arrays, of arrays...
+        </span>
+      </div>
+      <div class="component">
+        <span class="token object">object</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          An object in json is a list of key-value pairs. For example: 
+          <span class="token object">{</span><span class="token string">"key": "value"</span><span class="token object">}</span>
+          <br><br>
+          Notice how the key-value pairs are separated by commas, and contained within curly brackets.
+          <br><br>
+          Here is an object containing a few different types:
+          
+          <div class="indent indent-0  minecraft:addrider">
+            <span class="token punctuation">
+              {</span>
+                <div class="block">
+                <div class="indent indent-1 object minecraft:addrider.entity_type">
+              <span class="token property">
+              "span"</span><span class="token operator">
+              :</span><span class="token string">
+              "And Eggs!"</span></div><div class="indent indent-1 object minecraft:addrider.spawn_event">
+            <span class="token property">
+              "amazing"</span><span class="token operator">
+              :</span><span class="token boolean">
+              true</span></div></div><span class="token punctuation close-block">
+              }</span>
+            </div>
+        </span>
+      </div>
+      <div class="component">
+        <span class="token filter">object</span>
+        <span class="vertical-line"></span>
+        <span class="description" > 
+          A filter in Bedrock Add-Ons is a complex, recursive structure. For this reason it's not practicable to display all possible options inline.
+          <br><br>
+          You can can more about filters on <a href="https://bedrock.dev/docs/stable/Entities#Filters">bedrock.dev.</a>.
+        </span>
+      </div>
+    <div>
+  </div>
+    <script class="" src="index.js"></script>
+  </body>
+</html>

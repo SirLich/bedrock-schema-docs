@@ -165,6 +165,10 @@ padding-top: 1em;
   color: #f8c555;
 }
 
+.token.filter {
+  color: #b05435;
+}
+
 .token.type
 {
   color: white;
@@ -223,6 +227,16 @@ table {
     border-radius: 5px;
     border: 2px solid #111;
     margin-right: 10px;
+    font-size: 0.8em;
+    text-decoration: none;
+}
+
+.type-button {
+  color: #7ec699;
+}
+
+.description {
+  color: #999;
 }
 
 .collapse:hover {
@@ -230,12 +244,10 @@ table {
   background-color: #646673;
 }
 
-table {
-  margin-top: 4px;
-  display: block;
-  width: auto !important;
-  max-width: 100%;
-  overflow-x: auto;
+.vertical-line {
+  margin-left: 1em;
+  margin-right: 1em;
+  border-left: 0.3em solid #f8c555;
 }
 
 th,

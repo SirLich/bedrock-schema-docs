@@ -1,10 +1,7 @@
 from textwrap import indent
 import tag_builder as tb
 import json
-import hashlib, base64
-
-def tiny_hash(value):
-	return hashlib.md5(bytes(value)).digest(); d=base64.b64encode(d); 
+import traceback
 
 def smart_get(data, key, definitions, default=None):
 	"""
@@ -18,27 +15,46 @@ def smart_get(data, key, definitions, default=None):
 
 	return result
 
-def resolve_ref(schema, definitions):
+def force_array(data):
+	"""
+	Returns a list of data, even if it is a single item.
+	"""
+	if isinstance(data, list):
+		return data
+	else:
+		return [data]
+		
+def resolve_schema_references(schema, definitions):
+	"""
+	Resolves the references of a schema, at a single 'level'.
+	"""
 	if isinstance(schema, dict) and "$ref" in schema.keys():
 		schema = definitions.get(schema.get("$ref").split("/")[-1], {})
 	return schema
 
 def type_convert(type):
-	type_map = {
-		"number": "float"
-	}
+	"""
+	Converts a type to a more readable format.
+	"""
 
+	type_map = {
+		"number": "float",
+		None: "filter",
+	}
+	
 	return type_map.get(type, type)
 
 def fetch_compound_types(schema):
 	"""
-	Returns a list of compound types in a schema
+	Returns a list of compound types in a schema.
+	This is a form of "look ahead", where we look at the next schema 
+	to see what types we are dealing with.
 	"""
 
 	compound_types = []
 
 	for option in schema.get("oneOf"):
-		compound_types.append(type_convert(option.get("type", "unknown")))
+		compound_types.append(type_convert(option.get("type")))
 
 	return compound_types
 
@@ -48,52 +64,47 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 	Recursive method to generate html based on a json schema.
 	"""
 	try:
-		schema = resolve_ref(schema, definitions)
-		type = type_convert(schema.get('type', "unknown"))
+		schema = resolve_schema_references(schema, definitions)
 
+		# TODO: Handle this being an array
+		data_type = type_convert(schema.get('type'))
 		description = schema.get('description', 'Unknown Description')
 
+		# The 'tag' is the head of the HTML object that we will fill.
 		tag = parent.insert_tag('div', style=f"indent indent-{indent} {' '.join(classes)} {full_path}")
 
-
-		# comments
+		# Comment
 		tag.append_tag("div", f"# {description}", style="token comment")
+
+		# Property 
+		if not inside_array:
+			tag.append_tag("span", f'"{property_name}"', style='token property')
+			tag.append_tag("span", ":", style="token operator")
+		else:
+			tag.append_tag("span", f'{data_type}', style=f"token {data_type}")
 
 		# Compound types
 		if schema.get("oneOf"):
+			# A preview of the compound types
 			compound_types = fetch_compound_types(schema)
-			
-			tag.append_tag("span", f'"{property_name}"', style='token property')
-			tag.append_tag("span", ":", style="token operator")
 
-			button_group = tag.insert_tag("span", f"[{', '.join(compound_types)}]", style="token type italic")
+			tag.insert_tag("span", f"One Of: {', '.join(compound_types)}", style="token type italic")
 
-			# for i, compound_type in enumerate(compound_types):
-			# 	button_group.insert_tag("span", f'{compound_type}', style=f"token {compound_type} italic")
-			# 	button_group.insert_tag("span", ", ", style=f"token comment italic")
-
+			# Recurse into each compound type
 			for option in schema.get("oneOf"):
 				gen_recursive(tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path)
 			
 			return tag
 
 		# Simple Types, which are not compound
-		if type != 'object' and type != 'array':
+		if data_type != 'object' and data_type != 'array':
 			if not inside_array:
-				tag.append_tag("span", f'"{property_name}"', style='token property')
-				tag.append_tag("span", ":", style="token operator")
-			tag.append_tag("span", f'{type}', style=f"token {type}")
+				tag.append_tag("span", f'{data_type}', style=f"token {data_type}")
 		
 		# Object Types
-		if type == 'object':
-			if not inside_array:
-				tag.append_tag("span", f'"{property_name}"', style='token property')
-				tag.append_tag("span", ":", style="token operator")
-			else:
-				tag.append_tag("span", f'{type}', style=f"token {type}")
+		if data_type == 'object':
 
 			tag.append_tag("span", '{', style='token punctuation open-block')
-
 			tag.append_tag("span", '...', style='token comment invisible extender')
 
 			# The generated child properties
@@ -106,28 +117,28 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			tag.append_tag("span", '}', style='token punctuation close-block')
 
 		# Array Types
-		if type == 'array':
-			if not inside_array:
-				tag.append_tag("span", f'"{property_name}"', style='token property')
-				tag.append_tag("span", ":", style="token operator")
-			else:
-				tag.append_tag("span", f'{type}', style=f"token {type}")
+		if data_type == 'array':
+
+			items = schema.get('items', [])
 
 			tag.append_tag("span", '[', style='token punctuation open-block')
-			
 			tag.append_tag("span", '...', style='token comment invisible extender')
 			
 			# The generated child properties
 			inner_tag =tb.TagBuilder("div", style="block")
-			gen_recursive(inner_tag, property_name, schema.get('items', {}), indent + 1, True, definitions, ["array"], full_path)
+			for item in force_array(items):
+				gen_recursive(inner_tag, property_name, item, indent + 1, True, definitions, ["array"], full_path)
 			tag.insert(inner_tag)
 
 			# The final part
 			tag.append_tag("span", ']', style='token punctuation close-block')
 
 		return tag
-	except Exception:
-		return parent.insert_tag("div", f"unknown", style="token unknown indent")
+	except Exception as e:
+		print("Failed  on: ", property_name)
+		print(e)
+		print(traceback.format_exc())
+		return parent.insert_tag("div", f"unknown: {e}", style="token unknown indent")
 
 def generate_html(data, definitions):
 	"""
@@ -152,6 +163,7 @@ def main():
 	with open('schema.json') as f:
 		schema = json.load(f)
 
+	# TODO make this smart-get smarter.
 	definitions = schema.get('definitions')
 	data = smart_get(schema, 'minecraft:entity', definitions)
 	data = smart_get(data, 'components', definitions)
