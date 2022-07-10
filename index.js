@@ -67,9 +67,9 @@ copy_buttons.forEach((button) => {
 
     const ripple = button.getElementsByClassName("ripple")[0];
 
-    // if (ripple) {
-    //   ripple.remove();
-    // }
+    if (ripple) {
+      ripple.remove();
+    }
 
     button.appendChild(circle);
   });

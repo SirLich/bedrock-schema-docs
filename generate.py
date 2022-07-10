@@ -208,7 +208,7 @@ def generate_html(data, definitions):
 		# Put copy button, if possible
 		examples = force_array(schema.get('examples', []))
 		if len(examples) > 0:
-			example_json = [0]
+			example_json = examples[0]
 
 		if example_json:
 			button_row.insert_tag("button", "Copy", style="button-row-button copy-button")
