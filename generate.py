@@ -58,6 +58,27 @@ def fetch_compound_types(schema):
 
 	return compound_types
 
+def get_type_name(schema):
+	simple_type = schema.get("type")
+	if simple_type == "string" and "enum" in schema:
+		return "exact-string"
+	if schema.get("oneOf"):
+		return "compound"
+	elif simple_type == "string":
+		return "string"
+	elif simple_type == "number":
+		return "float"
+	elif simple_type == "boolean":
+		return "boolean"
+	elif simple_type == "object":
+		return "object"
+	elif simple_type == "array":
+		return "array"
+	elif simple_type == "integer":
+		return "integer"
+	else:
+		return "filter"
+
 
 def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, indent: int, inside_array, definitions : dict, classes, full_path) -> tb.TagBuilder:
 	"""
@@ -67,14 +88,18 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 		schema = resolve_schema_references(schema, definitions)
 
 		# TODO: Handle this being an array
-		data_type = type_convert(schema.get('type'))
+		data_type = get_type_name(schema)
+
 		description = schema.get('description', 'Unknown Description')
+		default = schema.get('default', None)
 
 		# The 'tag' is the head of the HTML object that we will fill.
 		tag = parent.insert_tag('div', style=f"indent indent-{indent} {' '.join(classes)} {full_path}")
 
 		# Comment
-		tag.append_tag("div", f"# {description}", style="token comment")
+		tag.append_tag("div", f"# {description}", style="token comment spacer")
+		if default:
+			tag.append_tag("div", f"# Default: {default}", style="token comment")
 
 		is_one_of = schema.get('oneOf') is not None
 
@@ -157,6 +182,9 @@ def generate_html(data, definitions):
 	components = tb.TagBuilder("div").decorate("class", "site-content")
 
 	for component_name, schema in data.get('properties').items():
+
+		schema = resolve_schema_references(schema, definitions)
+
 		component = components.insert_tag("div", style=f"component {component_name}")
 
 		title_row = component.insert_tag("div" , style="title-row")
@@ -168,13 +196,13 @@ def generate_html(data, definitions):
 		button_row.insert_tag("a", "Docs", style="button-row-button"). \
 			decorate("href", f"https://bedrock.dev/docs/stable/Entities#{component_name.replace(':', '%3A')}")
 		
-		# button_row.insert_tag("a", "Copy", style="button-row-button"). \
-		# 	decorate("href", f"{component_name}.json")
-			
+		# Put copy button, if possible
+		example_json = schema.get('examples', [None])[0]
+
+		if example_json:
+			button_row.insert_tag("button", "Copy", style="button-row-button copy-button")
+			button_row.insert_tag("span", str(example_json), style="hidden")
 	
-
-
-
 		code_container = component.insert_tag("div", style="code-container")
 		code = code_container.insert_tag("code", style="code")
 		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name)
