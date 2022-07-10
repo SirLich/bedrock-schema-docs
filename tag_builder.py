@@ -54,7 +54,6 @@ class TagBuilder():
 		self.children.append(tag)
 		return tag
 
-
 	def insert_tag(self, tag_name: str, data : str = "", *, collapse = False,  style = "") -> TagBuilder:
 		"""
 		Inserts a new tag into this structure, returning the child tag.

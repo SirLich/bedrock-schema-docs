@@ -76,15 +76,17 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 		# Comment
 		tag.append_tag("div", f"# {description}", style="token comment")
 
+		is_one_of = schema.get('oneOf') is not None
+
 		# Property 
 		if not inside_array:
 			tag.append_tag("span", f'"{property_name}"', style='token property')
 			tag.append_tag("span", ":", style="token operator")
-		else:
+		elif not is_one_of:
 			tag.append_tag("span", f'{data_type}', style=f"token {data_type}")
 
 		# Compound types
-		if schema.get("oneOf"):
+		if is_one_of:
 			# A preview of the compound types
 			compound_types = fetch_compound_types(schema)
 
@@ -156,18 +158,35 @@ def generate_html(data, definitions):
 
 	for component_name, schema in data.get('properties').items():
 		component = components.insert_tag("div", style=f"component {component_name}")
-		code = component.insert_tag("code", style="code")
+
+		title_row = component.insert_tag("div" , style="title-row")
+		title_row.insert_tag("h3", component_name, style="title").decorate("id", component_name)
+		title_row.insert_tag("a", "#", style="anchor").decorate("href", "#" + component_name)
+	
+		button_row = component.insert_tag("span", style="button-row")
+
+		button_row.insert_tag("a", "Docs", style="button-row-button"). \
+			decorate("href", f"https://bedrock.dev/docs/stable/Entities#{component_name.replace(':', '%3A')}")
+		
+		# button_row.insert_tag("a", "Copy", style="button-row-button"). \
+		# 	decorate("href", f"{component_name}.json")
+			
+	
+
+
+
+		code_container = component.insert_tag("div", style="code-container")
+		code = code_container.insert_tag("code", style="code")
 		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name)
 
 	with open('base.html', 'r') as f:
 		html = f.read()
 
 	html = html.replace('<gen/>', components.generate())
-
 	return html
 
 def main():
-	with open('schema.json') as f:
+	with open('schemas/schema.json') as f:
 		schema = json.load(f)
 
 	# TODO make this smart-get smarter.
