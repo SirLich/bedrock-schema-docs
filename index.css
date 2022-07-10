@@ -23,8 +23,6 @@ html, body {
 
 .searchbar {
   justify-self: end;
-
-  /* Style the searchbar in stunning dark mode */
   background-color: #2d2e2f;
   color: #fff;
   padding: 10px;
@@ -62,7 +60,7 @@ html, body {
 }
 
 #counter {
-  position:relative;
+  position: relative;
   left:-3em;
   width: 0;
   margin-right: 0em;
@@ -100,21 +98,39 @@ html, body {
 
 }
 
+span.ripple {
+  z-index: 100;
+  position: absolute; /* The absolute position we mentioned earlier */
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 400ms linear;
+  background-color: rgba(190, 190, 190, 0.7);
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
 .button-row-button {
+  overflow: hidden;
   margin-right: 0.25em;
   margin-left: 0.25em;
   padding : 0.2em;
+  position: relative;
   text-decoration: none;
   color: #7e95a6;
   font-family: monospace;
   border-radius: 5px;
 }
 
-.button-row-button:hover {
+/* .button-row-button:hover {
   color: #fff;
   fill: #fff;
   background-color: #1a92e8;
-}
+} */
 
 .button-row {
   font-size: 1.2em;

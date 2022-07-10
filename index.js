@@ -33,7 +33,6 @@ function filter() {
 
   elements.forEach((element) => {
     let searchTerm = element.className.toUpperCase();
-    console.log(searchTerm);
     if (searchTerm.includes(filter)) {
       filterCount += 1;
       element.style.display = "block";
@@ -53,20 +52,26 @@ const copy_buttons = document.querySelectorAll(".copy-button");
 copy_buttons.forEach((button) => {
   button.addEventListener("click", function handleClick(event) {
     navigator.clipboard.writeText(button.nextSibling.innerHTML);
+
+    // Ripple effect
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    console.log();
+    console.log(event.clientX)
+    circle.style.left = `${event.clientX - (button.getBoundingClientRect().x + radius)}px`;
+    circle.style.top = `${event.clientY - (button.getBoundingClientRect().y + radius)}px`;
+    circle.classList.add("ripple"); 
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+
+    // if (ripple) {
+    //   ripple.remove();
+    // }
+
+    button.appendChild(circle);
   });
 });
 
-function myFunction() {
-  /* Get the text field */
-  var copyText = document.getElementById("myInput");
-
-  /* Select the text field */
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-   /* Copy the text inside the text field */
-  navigator.clipboard.writeText(copyText.value);
-
-  /* Alert the copied text */
-  alert("Copied the text: " + copyText.value);
-} 

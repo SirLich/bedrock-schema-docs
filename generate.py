@@ -80,7 +80,7 @@ def get_type_name(schema):
 		return "filter"
 
 
-def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, indent: int, inside_array, definitions : dict, classes, full_path) -> tb.TagBuilder:
+def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, indent: int, inside_array, definitions : dict, classes, full_path, required=False) -> tb.TagBuilder:
 	"""
 	Recursive method to generate html based on a json schema.
 	"""
@@ -100,6 +100,12 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 		tag.append_tag("div", f"# {description}", style="token comment spacer")
 		if default:
 			tag.append_tag("div", f"# Default: {default}", style="token comment")
+		if "enum" in schema:
+			tag.append_tag("div", f"# Options: {schema.get('enum')}", style="token comment")
+		if required:
+			tag.append_tag("div", f"# Required: True", style="token comment")
+		if "items" in schema and isinstance(schema["items"], list):
+			tag.append_tag("div", f"# Must contain exactly {len(schema.get('items'))} elements.", style="token comment")
 
 		is_one_of = schema.get('oneOf') is not None
 
@@ -126,7 +132,7 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			# Recurse into each compound type
 			inner_tag = tb.TagBuilder("div", style="compound-block")
 			for option in schema.get("oneOf"):
-				gen_recursive(inner_tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path)
+				gen_recursive(inner_tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path, required=False)
 			tag.insert(inner_tag)
 			return tag
 
@@ -141,10 +147,13 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			tag.append_tag("span", '{', style='token punctuation open-block')
 			tag.append_tag("span", '...', style='token comment invisible extender')
 
+			required_list = schema.get('required', [])
+
 			# The generated child properties
 			inner_tag =tb.TagBuilder("div", style="block")
 			for property_name, value in schema.get('properties', {}).items():
-				gen_recursive(inner_tag, property_name, value, indent + 1, False, definitions, ["object"], f"{full_path}.{property_name}")
+				required = property_name in required_list
+				gen_recursive(inner_tag, property_name, value, indent + 1, False, definitions, ["object"], f"{full_path}.{property_name}", required=required)
 			tag.insert(inner_tag)
 
 			# The final part
@@ -161,7 +170,7 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			# The generated child properties
 			inner_tag =tb.TagBuilder("div", style="block")
 			for item in force_array(items):
-				gen_recursive(inner_tag, property_name, item, indent + 1, True, definitions, ["array"], full_path)
+				gen_recursive(inner_tag, property_name, item, indent + 1, True, definitions, ["array"], full_path, required=False)
 			tag.insert(inner_tag)
 
 			# The final part
@@ -197,7 +206,9 @@ def generate_html(data, definitions):
 			decorate("href", f"https://bedrock.dev/docs/stable/Entities#{component_name.replace(':', '%3A')}")
 		
 		# Put copy button, if possible
-		example_json = schema.get('examples', [None])[0]
+		examples = force_array(schema.get('examples', []))
+		if len(examples) > 0:
+			example_json = [0]
 
 		if example_json:
 			button_row.insert_tag("button", "Copy", style="button-row-button copy-button")
@@ -205,7 +216,7 @@ def generate_html(data, definitions):
 	
 		code_container = component.insert_tag("div", style="code-container")
 		code = code_container.insert_tag("code", style="code")
-		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name)
+		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name, required=False)
 
 	with open('base.html', 'r') as f:
 		html = f.read()
