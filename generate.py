@@ -234,7 +234,7 @@ def main():
 	data = smart_get(data, 'components', definitions)
 	html = generate_html(data, definitions)
 
-	with open('index.html', 'w') as f:
+	with open('docs/index.html', 'w') as f:
 		f.write(html)
 
 
