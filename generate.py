@@ -1,3 +1,8 @@
+"""
+This file is the actual generation script for the website. Run this to generate
+a new index.html, then preview in your browser.
+"""
+
 from textwrap import indent
 import tag_builder as tb
 import json
@@ -47,7 +52,7 @@ def type_convert(type):
 def fetch_compound_types(schema):
 	"""
 	Returns a list of compound types in a schema.
-	This is a form of "look ahead", where we look at the next schema 
+	This is a form of "look ahead", where we look at the next schema
 	to see what types we are dealing with.
 	"""
 
@@ -218,7 +223,7 @@ def generate_html(data, definitions):
 		code = code_container.insert_tag("code", style="code")
 		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name, required=False)
 
-	with open('base.html', 'r') as f:
+	with open('templates/base.html', 'r') as f:
 		html = f.read()
 
 	html = html.replace('<gen/>', components.generate())
