@@ -1,15 +1,5 @@
 /* Mobile First CSS */
 
-button {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-}
-
 html {
   background-color:#2d2e2f;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -19,6 +9,16 @@ html {
 html, body {
   margin:0;
   padding:0;
+}
+
+button {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .searchbar {
@@ -36,11 +36,6 @@ html, body {
   border: 2px solid #1a92e8;
 }
 
-.icon {
-  height: 1em;
-  vertical-align: middle;
-  display: inline-block;
-}
 .nav {
   z-index: 2;
   display : flex;
@@ -126,25 +121,11 @@ span.ripple {
   border-radius: 5px;
 }
 
-/* .button-row-button:hover {
-  color: #fff;
-  fill: #fff;
-  background-color: #1a92e8;
-} */
-
 .button-row {
-  font-size: 1.2em;
-  background-color: #242526;
-  z-index 1;
-  box-shadow: 0 -1.2px 1.2px #1a92e8;
-  bottom : -5px;
-  position: relative;
-  border-radius: 8px 8px 0px 0px;
-  padding: 0.5em 0.5em 0em 0.5em;
 }
 
+/* The black background on code blocks. */
 .code-container {
-  box-shadow: 0 0 3px #1a92e8;  
   background-color: #242526;
   border-radius: 0px 8px 8px 8px;
   
@@ -184,16 +165,6 @@ span.ripple {
 .button.active {
   background-color: #4d2659;
 }
-
-/* button, .no-style {
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
-} */
 
 .title {
   scroll-margin-top: 80px;
@@ -308,12 +279,6 @@ span.ripple {
   color: white;
 }
 
-/* Table */
-
-table {
-  border-collapse: collapse;
-}
-
 .collapse {
     /* Style the searchbar in stunning dark mode */
     background-color: #2d2e2f;
@@ -324,6 +289,20 @@ table {
     margin-right: 10px;
     font-size: 0.8em;
     text-decoration: none;
+}
+
+/* The button within the button-row on top of the code-block */
+.code-container-button {
+  /* Style the searchbar in stunning dark mode */
+  background-color: #2d2e2f;
+  background-color: #242526;
+  border-bottom: 3px ridge #7ec699;
+  border-radius: 5px 5px 0px 0px;
+  color: #7e95a6;
+  padding: 5px;
+  margin-right: 10px;
+  font-size: 0.8em;
+  text-decoration: none;
 }
 
 .type-button {
@@ -343,26 +322,6 @@ table {
   margin-left: 1em;
   margin-right: 1em;
   border-left: 0.3em solid #f8c555;
-}
-
-th,
-td {
-  border-style: solid;
-  border-width: 1px;
-  padding: 6px;
-}
-
-tbody,
-th,
-td {
-  border-color: #656e73;
-}
-
-th {
-  background-color: #a5f1b2;
-}
-td {
-  background-color: #ddfbdd;
 }
 
 /* Desktop */

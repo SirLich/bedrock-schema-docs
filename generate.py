@@ -11,6 +11,8 @@ import traceback
 def smart_get(data, key, definitions, default=None):
 	"""
 	Returns the value of a key in a dictionary, or a default value if the key does not exist.
+
+	Has the ability to follow schema references *but only if the schema follows a special format*.
 	"""
 
 	result = data.get('properties', {}).get(key, {})
@@ -63,11 +65,14 @@ def fetch_compound_types(schema):
 
 	return compound_types
 
-def get_type_name(schema):
-	simple_type = schema.get("type")
-	if simple_type == "string" and "enum" in schema:
+def get_type_name(schema_branch):
+	"""
+	Returns the type display-name of the schema branch.
+	"""
+	simple_type = schema_branch.get("type")
+	if simple_type == "string" and "enum" in schema_branch:
 		return "exact-string"
-	if schema.get("oneOf"):
+	if schema_branch.get("oneOf"):
 		return "compound"
 	elif simple_type == "string":
 		return "string"
@@ -85,7 +90,7 @@ def get_type_name(schema):
 		return "filter"
 
 
-def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, indent: int, inside_array, definitions : dict, classes, full_path, required=False) -> tb.TagBuilder:
+def generate_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, indent: int, inside_array, definitions : dict, classes, full_path, required=False) -> tb.TagBuilder:
 	"""
 	Recursive method to generate html based on a json schema.
 	"""
@@ -137,7 +142,7 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			# Recurse into each compound type
 			inner_tag = tb.TagBuilder("div", style="compound-block")
 			for option in schema.get("oneOf"):
-				gen_recursive(inner_tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path, required=False)
+				generate_recursive(inner_tag, property_name, option, indent + 1, True, definitions, ["compound"], full_path, required=False)
 			tag.insert(inner_tag)
 			return tag
 
@@ -158,7 +163,7 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			inner_tag =tb.TagBuilder("div", style="block")
 			for property_name, value in schema.get('properties', {}).items():
 				required = property_name in required_list
-				gen_recursive(inner_tag, property_name, value, indent + 1, False, definitions, ["object"], f"{full_path}.{property_name}", required=required)
+				generate_recursive(inner_tag, property_name, value, indent + 1, False, definitions, ["object"], f"{full_path}.{property_name}", required=required)
 			tag.insert(inner_tag)
 
 			# The final part
@@ -175,7 +180,7 @@ def gen_recursive(parent: tb.TagBuilder, property_name: str, schema: dict, inden
 			# The generated child properties
 			inner_tag =tb.TagBuilder("div", style="block")
 			for item in force_array(items):
-				gen_recursive(inner_tag, property_name, item, indent + 1, True, definitions, ["array"], full_path, required=False)
+				generate_recursive(inner_tag, property_name, item, indent + 1, True, definitions, ["array"], full_path, required=False)
 			tag.insert(inner_tag)
 
 			# The final part
@@ -207,7 +212,7 @@ def generate_html(data, definitions):
 	
 		button_row = component.insert_tag("span", style="button-row")
 
-		button_row.insert_tag("a", "Docs", style="button-row-button"). \
+		button_row.insert_tag("a", "bedrock.dev", style="code-container-button"). \
 			decorate("href", f"https://bedrock.dev/docs/stable/Entities#{component_name.replace(':', '%3A')}")
 		
 		# Put copy button, if possible
@@ -216,12 +221,13 @@ def generate_html(data, definitions):
 			example_json = examples[0]
 
 		if example_json:
-			button_row.insert_tag("button", "Copy", style="button-row-button copy-button")
+			example_json = f'"{component_name}": {json.dumps(example_json, indent=2)}'
+			button_row.insert_tag("button", "copy", style="code-container-button copy-button")
 			button_row.insert_tag("span", str(example_json), style="hidden")
 	
 		code_container = component.insert_tag("div", style="code-container")
 		code = code_container.insert_tag("code", style="code")
-		gen_recursive(code, component_name, schema, 0, False, definitions, [], component_name, required=False)
+		generate_recursive(code, component_name, schema, 0, False, definitions, [], component_name, required=False)
 
 	with open('templates/base.html', 'r') as f:
 		html = f.read()
@@ -230,6 +236,7 @@ def generate_html(data, definitions):
 	return html
 
 def main():
+	print("Running generation script. Open docs/index.html to view.")
 	with open('schemas/schema.json') as f:
 		schema = json.load(f)
 

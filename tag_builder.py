@@ -1,3 +1,7 @@
+"""
+This file is a mini library for building html based on a tag-based system.
+"""
+
 from __future__ import annotations
 from typing import List
 
