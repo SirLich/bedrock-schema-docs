@@ -4,7 +4,7 @@ Auto generated documentation from the Schemas by Blockception.
 
 [View the Website](https://sirlich.github.io/bedrock-schema-docs/)
 
-![image](https://user-images.githubusercontent.com/18729296/174756223-16560b88-63c2-4c5c-9599-d4cb2e7c04de.png)
+![image](https://user-images.githubusercontent.com/18729296/206040456-3cb5d1ed-f54f-4c47-af89-78b57008e59b.png)
 
 ## How to Use
 
