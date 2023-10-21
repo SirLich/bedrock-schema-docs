@@ -78,6 +78,7 @@ button {
   display: inline-block;
   padding: 10px;
   text-align: center;
+  color: #666;
 }
 
 .nav-link {

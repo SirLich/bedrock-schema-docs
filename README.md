@@ -1,6 +1,6 @@
 # Bedrock Schema-Docs
 
-Auto generated documentation from the Schemas by Blockception. 
+Auto generated documentation from the [Schemas by Blockception](https://github.com/Blockception/Minecraft-bedrock-json-schemas). 
 
 [View the Website](https://sirlich.github.io/bedrock-schema-docs/)
 
@@ -8,7 +8,4 @@ Auto generated documentation from the Schemas by Blockception.
 
 ## How to Use
 
-This website is built using a small self-written Python module for generating HTML. To update the website, this generator needs to be re-run.
-
-`python generate.py`
-
+See `DEVELOPMENT.md`
